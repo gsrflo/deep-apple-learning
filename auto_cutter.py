@@ -6,6 +6,12 @@ First pre-processing step:
 2. Brightness and Contrast correction, if imagery is RGB
 3. Edge detection
 4. Crop each slice to produce a single apple as result
+
+To do:
+- bug fix 
+- decrease images when cutting out of grid 
+- resize all images for model to same dimension
+- distinguish between rgb and infrared images when exporting (folder structure)
 """
 
 import numpy as np
@@ -15,15 +21,20 @@ import math
 
 
 home = str(Path.home())
-filepath = home + "/Desktop/images_apples/"
+filepath = str(Path(__file__).parent)
 filename = "grid8"
 input_image_type = ".png"
 output_image_type = ".jpg"
-type = "rgb"  # or infrared
+image_style = "rgb"  # or infrared
 input_image = filename + input_image_type
 output_image = filename + output_image_type
 
-input_path = filepath + input_image
+input_path = filepath + "/input/"
+if image_style == "rgb":
+    output_path = filepath + "/output/rgb/"
+elif image_style == "infrared":
+    output_path = filepath + "/output/infrared/"
+
 images_horizontally = 9
 images_vertically = 4
 
@@ -189,7 +200,7 @@ def cut_grid(input_image, images_x, images_y):
 def main():
 
     # Open image
-    image = cv2.imread(input_path)
+    image = cv2.imread(input_path + input_image)
 
     images = cut_grid(image, images_horizontally, images_vertically)
 
@@ -197,14 +208,14 @@ def main():
         image = images[i]
 
         # Apply pre-processing on rgb images for more contrast & to make brighter
-        if type == "rgb":
+        if image_style == "rgb":
             image = apply_brightness_contrast(image, 70, 50)
 
         # Crop
         result = crop_image(image)
 
         # Save image
-        cv2.imwrite(filepath + "output/crop_" + str(i + 1) + ".jpg", result)
+        cv2.imwrite(output_path + "crop_" + str(i + 1) + ".jpg", result)
         print("Image " + str(i) + " done")
 
 
