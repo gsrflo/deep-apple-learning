@@ -22,10 +22,10 @@ import math
 
 home = str(Path.home())
 filepath = str(Path(__file__).parent)
-filename = "grid8"
+filename = "grid_1i"
 input_image_type = ".png"
 output_image_type = ".jpg"
-image_style = "rgb"  # or infrared
+image_style = "infrared"  # rgb or infrared
 input_image = filename + input_image_type
 output_image = filename + output_image_type
 
@@ -35,7 +35,7 @@ if image_style == "rgb":
 elif image_style == "infrared":
     output_path = filepath + "/output/infrared/"
 
-images_horizontally = 9
+images_horizontally = 7
 images_vertically = 4
 
 
@@ -94,6 +94,8 @@ def crop_image(image):
     # Edge detection
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     blur = cv2.GaussianBlur(gray, (7, 7), 0)
+    # blur = cv2.GaussianBlur(gray, (3, 3), 0)
+
     thresh = cv2.adaptiveThreshold(
         blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 3
     )
@@ -136,7 +138,8 @@ def crop_image(image):
             y : y + h,
             x : x + w,
         ]
-
+    # cv2.imshow("Display window", ROI_square)
+    # cv2.waitKey(0)
     return ROI_square
 
 
@@ -209,13 +212,17 @@ def main():
 
         # Apply pre-processing on rgb images for more contrast & to make brighter
         if image_style == "rgb":
-            image = apply_brightness_contrast(image, 70, 50)
+            image = apply_brightness_contrast(image, 80, 60)
 
         # Crop
-        result = crop_image(image)
+        cropped = crop_image(image)
+
+        # Resize Image
+        dsize = (120, 120)
+        output = cv2.resize(cropped, dsize)
 
         # Save image
-        cv2.imwrite(output_path + "crop_" + str(i + 1) + ".jpg", result)
+        cv2.imwrite(output_path + "crop_" + str(i + 1) + ".jpg", output)
         print("Image " + str(i) + " done")
 
 
