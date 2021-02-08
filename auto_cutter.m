@@ -71,7 +71,7 @@ for i = 1:17
          mx = max(out,[],'all');
          out_ir = uint8(out/mx*255);
          %sore image:
-         name = ['output\ir\apple_', num2str(i), '_', num2str(k),'.jpg'];
+         name = ['output\ir\apple', num2str(i), '_', num2str(k),'.jpg'];
          imwrite(out_ir,name)
 
          %Get apple out of rgb image:
