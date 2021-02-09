@@ -68,8 +68,8 @@ for i = 1:17
          out_ir = imresize(out_ir, [120,120]);
          %scale color intensity:
          out = double(out_ir);
-         mx = max(out,[],'all');
-         out_ir = uint8(out/mx*255);
+         md = median(out,'all');
+         out_ir = uint8(out/md*180);
          %sore image:
          name = ['output\ir\apple', num2str(i), '_', num2str(k),'.jpg'];
          imwrite(out_ir,name)
@@ -79,8 +79,8 @@ for i = 1:17
          out_rgb = imresize(out_rgb, [120,120]);
          %scale color intensity:
          out = double(out_rgb);
-         mx = max(out,[],'all');
-         out_rgb = uint8(out/mx*255);
+         md = median(out,'all');
+         out_rgb = uint8(out/md*92);
          %store image:
          name = ['output\rgb\apple', num2str(i), '_', num2str(k),'.jpg'];
          imwrite(out_rgb,name)
