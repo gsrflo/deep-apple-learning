@@ -5,13 +5,12 @@ First pre-processing step:
 1. Cut images out of grid
 2. Brightness and Contrast correction, if imagery is RGB
 3. Edge detection
-4. Crop each slice to produce a single apple as result
+4. Resize image
+5. Crop each slice to produce a single apple as result
 
 To do:
 - bug fix 
 - decrease images when cutting out of grid 
-- resize all images for model to same dimension
-- distinguish between rgb and infrared images when exporting (folder structure)
 """
 
 import numpy as np
@@ -22,10 +21,10 @@ import math
 
 home = str(Path.home())
 filepath = str(Path(__file__).parent)
-filename = "grid_1i"
+filename = "grid1c_1"
 input_image_type = ".png"
 output_image_type = ".jpg"
-image_style = "infrared"  # rgb or infrared
+image_style = "rgb"  # rgb or infrared
 input_image = filename + input_image_type
 output_image = filename + output_image_type
 
@@ -93,8 +92,8 @@ def crop_image(image):
 
     # Edge detection
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    blur = cv2.GaussianBlur(gray, (7, 7), 0)
-    # blur = cv2.GaussianBlur(gray, (3, 3), 0)
+    # blur = cv2.GaussianBlur(gray, (7, 7), 0)
+    blur = cv2.GaussianBlur(gray, (1, 1), 0)
 
     thresh = cv2.adaptiveThreshold(
         blur, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 3
@@ -212,13 +211,13 @@ def main():
 
         # Apply pre-processing on rgb images for more contrast & to make brighter
         if image_style == "rgb":
-            image = apply_brightness_contrast(image, 80, 60)
+            image = apply_brightness_contrast(image, 90, 50)
 
         # Crop
         cropped = crop_image(image)
 
         # Resize Image
-        dsize = (120, 120)
+        dsize = (240, 240)
         output = cv2.resize(cropped, dsize)
 
         # Save image
