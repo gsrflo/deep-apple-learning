@@ -3,7 +3,7 @@
 ## About the Project
 
 The deep-apple-learning project was part of the lecture "Introduction to Deep Learning" at TUM.
-The goal was to implement a previously learned deep learning approach to solve a self-chosen problem.
+The goal was to implement a previously taught deep learning approach to solve a self-chosen problem.
 In this case, the team decided to build a machine learning model for fruit classification (i.e. apples).
 Besides a self-created CNN also pre-trained models were evaluated, like ResNet50 or VGG for instance.
 
@@ -34,3 +34,10 @@ Libraries:
 * numpy
 * matplotlib
 * seaborn
+
+## How To
+
+* Copy the folder [``deep-apple-learning``](https://drive.google.com/drive/folders/1A0JZW5RrBpWRXLivHhvMimV1tUJDOhLh?usp=sharing) onto your personal google drive
+* Open ``deep-apple-learning_final`` using Google Colab
+* Run the code: you need to import your Google Drive. 
+* * If necessary, adjust the variables ``data_path`` and ``model_dir``, so that they represent the path to the dataset folder and the checkpoint models folder, respectively.
