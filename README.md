@@ -38,6 +38,6 @@ Libraries:
 ## How To
 
 * Copy the folder [``deep-apple-learning``](https://drive.google.com/drive/folders/1A0JZW5RrBpWRXLivHhvMimV1tUJDOhLh?usp=sharing) onto your personal google drive
-* Open ``deep-apple-learning_final`` using Google Colab
+* Open ``deep_apple_learning_final`` using Google Colab
 * Run the code: you need to import your Google Drive.
  (If necessary, adjust the variables ``data_path`` and ``model_dir``, so that they represent the path to the dataset folder and the checkpoint models folder, respectively.)
